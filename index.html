@@ -13,26 +13,26 @@
 <script>
 // The filenames below intentionally end in .pdf.pdf because that is how they are saved in the repository.
 const documents=[
-['CIT','CIT.pdf.pdf'],
-['DIT Geofry Mutangili Transcript','DIT-Geofry-Mutangili-Transcript.pdf.pdf'],
+['CIT','CIT.pdf.pdf.pdf'],
+['DIT Geofry Mutangili Transcript','DIT-Geofry-Mutangili-Transcript.pdf.pdf.pdf'],
 ['Doc ID','Doc-ID.pdf.pdf'],
-['DOC-20260826-WA0003_260903_014123 (1)','DOC-20260826-WA0003_260903_014123-(1).pdf.pdf'],
-['DOC-20260826-WA0005_260903_014325 Copy','DOC-20260826-WA0005_260903_014325-Copy.pdf.pdf'],
-['DOC-20260826-WA0005_260903_014325','DOC-20260826-WA0005_260903_014325.pdf.pdf'],
-['ID (1)','id-(1).pdf.pdf'],
-['ID','id.pdf.pdf'],
-['KCPE Certificate','KCPE-CERT.pdf.pdf'],
-['OIAI Certificate - Geofry Mutangili (1)','OIAI-Certificate-Geofry-Mutangili-(1).pdf.pdf'],
-['OIAI Certificate - Geofry Mutangili','OIAI-Certificate-Geofry-Mutangili.pdf.pdf'],
-['Police Clearance Certificate','PCC-QASKLANMP-POLICE-CLEARANCE-CERTIFICATE-WK.pdf.pdf'],
-['Primary Leaving Certificate','PRIMARY-LEAVING.pdf.pdf'],
-['Secondary Leaving Certificate','SECONDARY-LEAVING-CERTIFICATE.pdf.pdf'],
-['Secondary Result Slip','SECONDARY-RESULT-SLIP.pdf.pdf'],
-['SKM_C364e26082810550','SKM_C364e26082810550.pdf.pdf'],
-['YCA Catholic','YCA-CATHOLIC.pdf.pdf'],
-['Birth Certificate','BIRTH-CERT.pdf.pdf'],
-['CIT and Transcript','CIT-AND-TRANSCRIPT.pdf.pdf'],
-['CIT Transcript','CIT-TRANSCRIPT.pdf.pdf']
+['DOC-20260826-WA0003_260903_014123 (1)','DOC-20260826-WA0003_260903_014123-(1).pdf.pdf.pdf'],
+['DOC-20260826-WA0005_260903_014325 Copy','DOC-20260826-WA0005_260903_014325-Copy.pdf.pdf.pdf'],
+['DOC-20260826-WA0005_260903_014325','DOC-20260826-WA0005_260903_014325.pdf.pdf.pdf'],
+['ID (1)','id-(1).pdf.pdf.pdf.pdf'],
+['ID','id.pdf.pdf.pdf.pdf'],
+['KCPE Certificate','KCPE-CERT.pdf.pdf.pdf'],
+['OIAI Certificate - Geofry Mutangili (1)','OIAI-Certificate-Geofry-Mutangili-(1).pdf.pdf.pdf'],
+['OIAI Certificate - Geofry Mutangili','OIAI-Certificate-Geofry-Mutangili.pdf.pdf.pdf'],
+['Police Clearance Certificate','PCC-QASKLANMP-POLICE-CLEARANCE-CERTIFICATE-WK.pdf.pdf.pdf'],
+['Primary Leaving Certificate','PRIMARY-LEAVING.pdf.pdf.pdf'],
+['Secondary Leaving Certificate','SECONDARY-LEAVING-CERTIFICATE.pdf.pdf.pdf'],
+['Secondary Result Slip','SECONDARY-RESULT-SLIP.pdf.pdf.pdf'],
+['SKM_C364e26082810550','SKM_C364e26082810550.pdf.pdf.pdf'],
+['YCA Catholic','YCA-CATHOLIC.pdf.pdf.pdf'],
+['Birth Certificate','BIRTH-CERT.pdf.pdf.pdf'],
+['CIT and Transcript','CIT-AND-TRANSCRIPT.pdf.pdf.pdf'],
+['CIT Transcript','CIT-TRANSCRIPT.pdf.pdf.pdf']
 ];
 const grid=document.getElementById('grid'), search=document.getElementById('search'), count=document.getElementById('count'), empty=document.getElementById('empty');
 function render(){const q=search.value.trim().toLowerCase();const list=documents.filter(d=>(d[0]+' '+d[1]).toLowerCase().includes(q));grid.replaceChildren();for(const [name,file] of list){const card=document.createElement('article');card.className='card';const top=document.createElement('div');const icon=document.createElement('span');icon.className='icon';icon.textContent='PDF';const info=document.createElement('div');const title=document.createElement('div');title.className='name';title.textContent=name;const fn=document.createElement('div');fn.className='filename';fn.textContent=file;info.append(title,fn);top.append(icon,info);const actions=document.createElement('div');actions.className='actions';const url='./'+file.split('/').map(encodeURIComponent).join('/');const view=document.createElement('a');view.className='btn view';view.textContent='View PDF';view.href=url;view.target='_blank';view.rel='noopener';const download=document.createElement('a');download.className='btn download';download.textContent='Download PDF';download.href=url;download.setAttribute('download',file);actions.append(view,download);card.append(top,actions);grid.append(card)}count.textContent=`${list.length} of ${documents.length} documents`;empty.hidden=list.length>0;grid.hidden=list.length===0}
