@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#10243a"><title>Geofry Mutangili | Document Library</title>
+<style>
+:root{--navy:#10243a;--blue:#24679a;--gold:#d7b879;--ink:#192b3c;--muted:#657487;--line:#dce4ec;--bg:#eef2f6}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}.top{background:var(--navy);color:white;border-bottom:4px solid var(--gold);padding:20px max(20px,calc((100% - 1100px)/2));display:flex;align-items:center;gap:14px}.logo{border:1px solid #b8c7d5;border-radius:10px;padding:9px 11px;color:var(--gold);font-weight:800}.top strong{display:block;letter-spacing:.04em}.top small{color:#d1dbe5}.hero{background:linear-gradient(120deg,#10243a,#1d4b70);color:#fff;padding:42px 20px 55px}.hero>div{max-width:1100px;margin:auto}.hero p{color:#d5e0e9;margin-bottom:0}.hero h1{font-size:clamp(2rem,5vw,3.2rem);line-height:1.1;margin:8px 0}.wrap{max-width:1100px;margin:-24px auto 40px;padding:0 16px}.panel{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 14px 40px #10243a17;overflow:hidden}.head{padding:20px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.head h2{margin:0;font-size:1.1rem}.count{color:var(--muted);font-size:.9rem}.searchbox{padding:18px 22px}.search{width:100%;padding:12px 14px;border:1px solid #c7d2de;border-radius:10px;font:inherit}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;padding:0 22px 22px}.card{border:1px solid var(--line);border-radius:12px;padding:15px;display:flex;flex-direction:column;gap:13px;min-width:0}.name{font-weight:750;overflow-wrap:anywhere}.filename{color:var(--muted);font-size:.75rem;overflow-wrap:anywhere;margin-top:4px}.icon{display:inline-grid;place-items:center;width:39px;height:39px;border-radius:9px;background:#eaf2f9;color:var(--blue);font-weight:800;margin-right:10px;float:left}.actions{display:flex;gap:8px;margin-top:auto}.btn{flex:1;text-align:center;text-decoration:none;padding:9px 8px;border-radius:8px;font-weight:700;font-size:.85rem}.view{background:var(--navy);color:white}.download{border:1px solid var(--line);color:var(--navy);background:white}.empty{padding:25px;text-align:center;color:var(--muted)}footer{text-align:center;color:var(--muted);font-size:.85rem;padding:0 15px 30px}@media(max-width:850px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:560px){.grid{grid-template-columns:1fr;padding:0 12px 14px}.head,.searchbox{padding:15px}.hero{padding:35px 18px 45px}.wrap{padding:0 10px}}
+</style></head><body>
+<header class="top"><div class="logo">GM</div><div><strong>GEOFRY MUTANGILI</strong><small>Personal Documents · View & Download</small></div></header>
+<section class="hero"><div><p>PERSONAL DOCUMENT LIBRARY</p><h1>Certificates & Documents</h1><p>Find a document, view it in your browser, or download a copy.</p></div></section>
+<main class="wrap"><section class="panel"><div class="head"><h2>My documents</h2><span class="count" id="count">20 documents</span></div><div class="searchbox"><input class="search" id="search" type="search" placeholder="Search documents…" aria-label="Search documents"></div><div class="grid" id="grid"></div><div class="empty" id="empty" hidden>No documents match your search.</div></section></main>
+<footer>© <span id="year"></span> Geofry Mutangili · Personal document library</footer>
+<script>
+// The filenames below intentionally end in .pdf.pdf because that is how they are saved in the repository.
+const documents=[
+['CIT','CIT.pdf.pdf'],
+['DIT Geofry Mutangili Transcript','DIT-Geofry-Mutangili-Transcript.pdf.pdf'],
+['Doc ID','Doc-ID.pdf.pdf'],
+['DOC-20260826-WA0003_260903_014123 (1)','DOC-20260826-WA0003_260903_014123-(1).pdf.pdf'],
+['DOC-20260826-WA0005_260903_014325 Copy','DOC-20260826-WA0005_260903_014325-Copy.pdf.pdf'],
+['DOC-20260826-WA0005_260903_014325','DOC-20260826-WA0005_260903_014325.pdf.pdf'],
+['ID (1)','id-(1).pdf.pdf'],
+['ID','id.pdf.pdf'],
+['KCPE Certificate','KCPE-CERT.pdf.pdf'],
+['OIAI Certificate - Geofry Mutangili (1)','OIAI-Certificate-Geofry-Mutangili-(1).pdf.pdf'],
+['OIAI Certificate - Geofry Mutangili','OIAI-Certificate-Geofry-Mutangili.pdf.pdf'],
+['Police Clearance Certificate','PCC-QASKLANMP-POLICE-CLEARANCE-CERTIFICATE-WK.pdf.pdf'],
+['Primary Leaving Certificate','PRIMARY-LEAVING.pdf.pdf'],
+['Secondary Leaving Certificate','SECONDARY-LEAVING-CERTIFICATE.pdf.pdf'],
+['Secondary Result Slip','SECONDARY-RESULT-SLIP.pdf.pdf'],
+['SKM_C364e26082810550','SKM_C364e26082810550.pdf.pdf'],
+['YCA Catholic','YCA-CATHOLIC.pdf.pdf'],
+['Birth Certificate','BIRTH-CERT.pdf.pdf'],
+['CIT and Transcript','CIT-AND-TRANSCRIPT.pdf.pdf'],
+['CIT Transcript','CIT-TRANSCRIPT.pdf.pdf']
+];
+const grid=document.getElementById('grid'), search=document.getElementById('search'), count=document.getElementById('count'), empty=document.getElementById('empty');
+function render(){const q=search.value.trim().toLowerCase();const list=documents.filter(d=>(d[0]+' '+d[1]).toLowerCase().includes(q));grid.replaceChildren();for(const [name,file] of list){const card=document.createElement('article');card.className='card';const top=document.createElement('div');const icon=document.createElement('span');icon.className='icon';icon.textContent='PDF';const info=document.createElement('div');const title=document.createElement('div');title.className='name';title.textContent=name;const fn=document.createElement('div');fn.className='filename';fn.textContent=file;info.append(title,fn);top.append(icon,info);const actions=document.createElement('div');actions.className='actions';const url='./'+file.split('/').map(encodeURIComponent).join('/');const view=document.createElement('a');view.className='btn view';view.textContent='View PDF';view.href=url;view.target='_blank';view.rel='noopener';const download=document.createElement('a');download.className='btn download';download.textContent='Download PDF';download.href=url;download.setAttribute('download',file);actions.append(view,download);card.append(top,actions);grid.append(card)}count.textContent=`${list.length} of ${documents.length} documents`;empty.hidden=list.length>0;grid.hidden=list.length===0}
+search.addEventListener('input',render);document.getElementById('year').textContent=new Date().getFullYear();render();
+</script></body></html>
