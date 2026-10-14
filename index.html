@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#10243a">
+<meta name="description" content="Geofry Mutangili document library. PDF files are listed automatically from a GitHub repository.">
+<title>Geofry Mutangili | Document Library</title>
+<style>
+:root{--navy:#10243a;--navy2:#173653;--blue:#2e6d9f;--gold:#c9a96e;--ink:#182534;--muted:#667586;--paper:#fff;--canvas:#eef2f6;--line:#dce4ec;--shadow:0 18px 48px rgba(16,36,58,.13);--green:#16794b;--red:#a12b2b}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);background:var(--canvas);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;line-height:1.5}
+button,input{font:inherit}a{color:inherit}.topbar{background:var(--navy);color:#fff;border-bottom:3px solid var(--gold)}.topbar-inner{width:min(1180px,calc(100% - 36px));margin:auto;min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:18px}.brand{display:flex;align-items:center;gap:12px;min-width:0}.monogram{width:43px;height:43px;flex:0 0 auto;display:grid;place-items:center;border:1px solid rgba(255,255,255,.45);border-radius:10px;color:var(--gold);font-weight:800;letter-spacing:.04em}.brand strong{display:block;font-size:.97rem;letter-spacing:.01em}.brand span{display:block;color:#c8d4df;font-size:.78rem;margin-top:1px}.top-actions{display:none}
+.btn{border:1px solid transparent;border-radius:9px;padding:10px 15px;display:inline-flex;justify-content:center;align-items:center;gap:8px;font-size:.9rem;font-weight:700;text-decoration:none;cursor:pointer;transition:transform .15s ease,background .15s ease}.btn:hover{transform:translateY(-1px)}.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}.btn-gold{background:var(--gold);color:#172536}.btn-outline{background:transparent;border-color:rgba(255,255,255,.35);color:#fff}.btn-dark{background:var(--navy);color:#fff}.btn-light{background:#fff;border-color:var(--line);color:var(--navy)}.hero{background:linear-gradient(125deg,var(--navy),var(--navy2));color:#fff;padding:48px 18px 60px}.hero-inner{width:min(1180px,100%);margin:auto}.eyebrow{color:#e4c994;font-size:.76rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;margin:0 0 13px}h1{margin:0;font-size:clamp(2rem,5vw,3.25rem);line-height:1.08;letter-spacing:-.035em}.hero-copy{max-width:720px;color:#d3dee8;font-size:1.02rem;margin:16px 0 0}.main{width:min(1180px,calc(100% - 36px));margin:-25px auto 48px;position:relative}.panel{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);margin-bottom:20px}.panel-head{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}.panel-head h2{font-size:1rem;margin:0}.panel-head p{font-size:.82rem;color:var(--muted);margin:3px 0 0}.tools{padding:18px 22px;display:flex;gap:12px;flex-wrap:wrap;align-items:center}.search{flex:1 1 240px;min-width:180px;border:1px solid #cbd5df;border-radius:9px;padding:11px 13px;background:#fff;color:var(--ink)}.search:focus{outline:3px solid #d6e8f7;border-color:var(--blue)}.helper{color:var(--muted);font-size:.84rem;padding:0 22px 18px}.status{font-size:.84rem;font-weight:700;color:var(--muted)}.status.good{color:var(--green)}.status.warn{color:#946200}.cards{padding:0 22px 22px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}.doc-card{border:1px solid var(--line);border-radius:12px;padding:15px;display:flex;flex-direction:column;gap:12px;min-width:0;background:#fff}.doc-card.active{border-color:#9ac6e7;background:#f8fbfe}.doc-top{display:flex;align-items:flex-start;gap:11px}.doc-icon{display:grid;place-items:center;flex:0 0 40px;height:43px;border-radius:10px;background:#eaf2f9;color:var(--blue);font-size:1.05rem;font-weight:800}.doc-name{font-size:.91rem;font-weight:750;overflow-wrap:anywhere;line-height:1.35}.doc-meta{font-size:.76rem;color:var(--muted);margin-top:5px}.doc-state{font-size:.76rem;color:var(--muted)}.doc-state.ready{color:var(--green);font-weight:750}.doc-actions{display:flex;gap:7px;margin-top:auto}.doc-actions .btn{padding:8px 10px;font-size:.8rem;flex:1;min-width:0}
+.doc-actions button{font-family:inherit;border:1px solid transparent}
+.doc-actions .btn-light{border-color:var(--line)}.viewer{display:none}.viewer.visible{display:block}.viewer-head{padding:18px 22px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line)}.viewer-head h2{margin:0;font-size:1rem}.viewer-head p{margin:3px 0 0;color:var(--muted);font-size:.82rem}.viewer-actions{display:flex;gap:8px;flex-wrap:wrap}.pdf-wrap{background:#dfe5eb;padding:16px}.pdf-frame{display:block;width:100%;height:min(76vh,1000px);min-height:500px;border:0;border-radius:7px;background:#fff}.empty{padding:38px 20px;text-align:center;color:var(--muted)}.empty strong{display:block;color:var(--navy);font-size:1.05rem;margin-bottom:5px}.notice{display:flex;gap:12px;align-items:flex-start;padding:16px 18px;background:#f8fafc;border:1px solid var(--line);border-radius:12px;color:#516173;font-size:.86rem;margin-top:18px}.notice strong{color:var(--navy)}footer{text-align:center;padding:0 18px 30px;color:#738091;font-size:.82rem}.hidden{display:none!important}
+@media(max-width:900px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:600px){.topbar-inner{width:calc(100% - 24px);min-height:68px}.brand span{display:none}.top-actions .btn-outline{display:none}.top-actions .btn{padding:9px 11px;font-size:.8rem}.hero{padding:37px 15px 47px}.main{width:calc(100% - 20px);margin-top:-20px}.panel-head,.tools{padding:15px}.cards{padding:0 12px 14px;grid-template-columns:1fr}.helper{padding:0 15px 15px}.pdf-wrap{padding:7px}.pdf-frame{height:70vh;min-height:430px}.viewer-head{padding:15px}.viewer-actions{width:100%}.viewer-actions .btn{flex:1}.doc-actions .btn{font-size:.78rem}}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="topbar-inner">
+  <div class="brand"><div class="monogram">GM</div><div><strong>GEOFRY MUTANGILI</strong><span>Personal Documents · View & Download</span></div></div>
+  
+</div></header>
+<section class="hero"><div class="hero-inner"><p class="eyebrow">Personal document library</p><h1>Certificates & Documents</h1><p class="hero-copy">Browse the documents stored in this website’s GitHub repository. Open a PDF in your browser or download it directly.</p></div></section>
+<main class="main">
+<section class="panel">
+  <div class="panel-head"><div><h2>My documents</h2><p id="summary">Loading your documents…</p></div><div class="status good" id="overallStatus" aria-live="polite">Loading documents…</div></div>
+  <div class="tools"><input class="search" id="search" type="search" placeholder="Search document names…" aria-label="Search documents"></div>
+  <div class="helper">Showing the PDF files currently stored in this GitHub repository.</div>
+  <div class="cards" id="cards"></div>
+  <div class="empty" id="noResults" hidden><strong>No documents match your search.</strong>Try another search term.</div>
+</section>
+<section class="panel viewer" id="viewerPanel">
+  <div class="viewer-head"><div><h2 id="viewerTitle">Document preview</h2><p id="viewerInfo">PDF preview</p></div><div class="viewer-actions"><a class="btn btn-dark" id="openBtn" href="#" target="_blank" rel="noopener">Open in new tab ↗</a><a class="btn btn-light" id="downloadBtn" href="#" download>Download ↓</a><button class="btn btn-light" id="closeBtn" type="button">Close preview</button></div></div>
+  <div class="pdf-wrap"><iframe class="pdf-frame" id="pdfFrame" title="Selected PDF preview"></iframe></div>
+</section>
+</main>
+<footer>© <span id="year"></span> Geofry Mutangili · Personal document library</footer>
+<script>
+// Automatically detects the GitHub Pages repository and lists PDFs from
+// BOTH the repository root and its optional "documents" folder.
+const $ = id => document.getElementById(id);
+let docs = [];
+
+const knownNames = {
+  "CIT.pdf": "CIT",
+  "DIT-Geofry-Mutangili-Transcript.pdf": "DIT Geofry Mutangili Transcript",
+  "Doc-ID.pdf": "Doc ID",
+  "DOC-20260826-WA0003_260903_014123-(1).pdf": "DOC-20260826-WA0003_260903_014123 (1)",
+  "DOC-20260826-WA0005_260903_014325-Copy.pdf": "DOC-20260826-WA0005_260903_014325 Copy",
+  "DOC-20260826-WA0005_260903_014325.pdf": "DOC-20260826-WA0005_260903_014325",
+  "id-(1).pdf": "ID (1)",
+  "id.pdf": "ID",
+  "KCPE-CERT.pdf": "KCPE Certificate",
+  "OIAI-Certificate-Geofry-Mutangili-(1).pdf": "OIAI Certificate - Geofry Mutangili (1)",
+  "OIAI-Certificate-Geofry-Mutangili.pdf": "OIAI Certificate - Geofry Mutangili",
+  "PCC-QASKLANMP-POLICE-CLEARANCE-CERTIFICATE-WK.pdf": "Police Clearance Certificate",
+  "PRIMARY-LEAVING.pdf": "Primary Leaving Certificate",
+  "SECONDARY-LEAVING-CERTIFICATE.pdf": "Secondary Leaving Certificate",
+  "SECONDARY-RESULT-SLIP.pdf": "Secondary Result Slip",
+  "SKM_C364e26082810550.pdf": "SKM_C364e26082810550",
+  "YCA-CATHOLIC.pdf": "YCA Catholic",
+  "BIRTH-CERT.pdf": "Birth Certificate",
+  "CIT-AND-TRANSCRIPT.pdf": "CIT and Transcript",
+  "CIT-TRANSCRIPT.pdf": "CIT Transcript"
+};
+
+function getRepository() {
+  const host = window.location.hostname;
+  const pathParts = window.location.pathname.split('/').filter(Boolean);
+  if (!host.endsWith('.github.io')) return null;
+  const owner = host.slice(0, -'.github.io'.length);
+  const repo = pathParts[0] || `${owner}.github.io`;
+  return { owner, repo };
+}
+
+function normalize(s) {
+  return String(s).toLowerCase().replace(/\.pdf$/i, '').replace(/\(\d+\)/g, ' ')
+    .replace(/[^a-z0-9]+/g, ' ').trim().replace(/\s+/g, ' ');
+}
+
+function render() {
+  const q = normalize($('search').value);
+  const list = docs.filter(d => normalize(d.name + ' ' + d.file).includes(q));
+  $('cards').replaceChildren();
+  list.forEach(d => {
+    const card = document.createElement('article'); card.className = 'doc-card';
+    const top = document.createElement('div'); top.className = 'doc-top';
+    const icon = document.createElement('div'); icon.className = 'doc-icon'; icon.textContent = 'PDF';
+    const nameWrap = document.createElement('div');
+    const name = document.createElement('div'); name.className = 'doc-name'; name.textContent = d.name;
+    const meta = document.createElement('div'); meta.className = 'doc-meta'; meta.textContent = d.file;
+    nameWrap.append(name, meta); top.append(icon, nameWrap);
+    const state = document.createElement('div'); state.className = 'doc-state ready'; state.textContent = 'Available';
+    const actions = document.createElement('div'); actions.className = 'doc-actions';
+    const view = document.createElement('button'); view.type = 'button';
+    view.className = 'btn btn-dark'; view.textContent = 'View PDF';
+    view.addEventListener('click', () => showPreview(d));
+    const download = document.createElement('a'); download.className = 'btn btn-light';
+    download.textContent = 'Download PDF'; download.href = d.downloadUrl;
+    download.setAttribute('download', d.file); download.rel = 'noopener noreferrer';
+    actions.append(view, download); card.append(top, state, actions); $('cards').append(card);
+  });
+  $('summary').textContent = `${list.length} of ${docs.length} PDF files shown`;
+  $('noResults').hidden = list.length !== 0;
+}
+
+function loadDocuments() {
+  // These are the exact filenames currently visible in the My-Document repository.
+  // GitHub shows each uploaded PDF with a double extension (.pdf.pdf), so links below match that exactly.
+  const files = [
+    { name: 'CIT', file: 'CIT.pdf.pdf' },
+    { name: 'DIT Geofry Mutangili Transcript', file: 'DIT-Geofry-Mutangili-Transcript.pdf.pdf' },
+    { name: 'Doc ID', file: 'Doc-ID.pdf.pdf' },
+    { name: 'DOC-20260826-WA0003_260903_014123 (1)', file: 'DOC-20260826-WA0003_260903_014123-(1).pdf.pdf' },
+    { name: 'DOC-20260826-WA0005_260903_014325 Copy', file: 'DOC-20260826-WA0005_260903_014325-Copy.pdf.pdf' },
+    { name: 'DOC-20260826-WA0005_260903_014325', file: 'DOC-20260826-WA0005_260903_014325.pdf.pdf' },
+    { name: 'ID (1)', file: 'id-(1).pdf.pdf' },
+    { name: 'ID', file: 'id.pdf.pdf' },
+    { name: 'KCPE Certificate', file: 'KCPE-CERT.pdf.pdf' },
+    { name: 'OIAI Certificate - Geofry Mutangili (1)', file: 'OIAI-Certificate-Geofry-Mutangili-(1).pdf.pdf' },
+    { name: 'OIAI Certificate - Geofry Mutangili', file: 'OIAI-Certificate-Geofry-Mutangili.pdf.pdf' },
+    { name: 'Police Clearance Certificate', file: 'PCC-QASKLANMP-POLICE-CLEARANCE-CERTIFICATE-WK.pdf.pdf' },
+    { name: 'Primary Leaving Certificate', file: 'PRIMARY-LEAVING.pdf.pdf' },
+    { name: 'Secondary Leaving Certificate', file: 'SECONDARY-LEAVING-CERTIFICATE.pdf.pdf' },
+    { name: 'Secondary Result Slip', file: 'SECONDARY-RESULT-SLIP.pdf.pdf' },
+    { name: 'SKM_C364e26082810550', file: 'SKM_C364e26082810550.pdf.pdf' },
+    { name: 'YCA Catholic', file: 'YCA-CATHOLIC.pdf.pdf' },
+    { name: 'Birth Certificate', file: 'BIRTH-CERT.pdf.pdf' },
+    { name: 'CIT and Transcript', file: 'CIT-AND-TRANSCRIPT.pdf.pdf' },
+    { name: 'CIT Transcript', file: 'CIT-TRANSCRIPT.pdf.pdf' }
+  ];
+
+  docs = files.map(item => {
+    const encodedFile = encodeURIComponent(item.file);
+    const url = './' + encodedFile;
+    return { name: item.name, file: item.file, url, downloadUrl: url };
+  });
+
+  const status = $('overallStatus');
+  status.className = 'status good';
+  status.textContent = '20 documents listed';
+  render();
+}
+
+function showPreview(doc) {
+  $('viewerTitle').textContent = doc.name;
+  $('viewerInfo').textContent = doc.file;
+  $('pdfFrame').src = doc.url;
+  $('openBtn').href = doc.url;
+  $('downloadBtn').href = doc.downloadUrl;
+  $('downloadBtn').setAttribute('download', doc.file);
+  $('viewerPanel').classList.add('visible');
+  $('viewerPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+$('closeBtn').addEventListener('click', () => {
+  $('viewerPanel').classList.remove('visible');
+  $('pdfFrame').src = 'about:blank';
+});
+$('search').addEventListener('input', render);
+$('year').textContent = new Date().getFullYear();
+loadDocuments();
+</script>
+</body></html>
