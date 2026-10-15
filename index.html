@@ -308,7 +308,7 @@ body.viewer-open{overflow:hidden}
 </div>
 </div>
 <iframe class="viewer-frame" id="viewerFrame" title="PDF document preview" src="about:blank"></iframe>
-<p class="viewer-note">Viewing is open. A password is required before using the Print or Save / Download buttons.</p>
+<p class="viewer-note">Viewing is open. The library asks for a password before its Download, Save, and Print actions. Browser controls or direct file links may still bypass HTML-only restrictions.</p>
 </section>
 </div>
 
@@ -352,7 +352,7 @@ function askForPassword(action){
 function openViewer(file,title){
   activeFile=file;
   viewerTitle.textContent=title||'PDF Preview';
-  viewerFrame.src=file+'#toolbar=0&navpanes=0&view=FitH';
+  viewerFrame.src=file+'#toolbar=0&navpanes=0&scrollbar=0&view=FitH';
   backdrop.classList.add('open');
   document.body.classList.add('viewer-open');
 }
@@ -424,4 +424,3 @@ filterCards();
 
 </body>
 </html>
-```
