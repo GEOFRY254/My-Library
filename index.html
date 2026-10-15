@@ -1,106 +1,498 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#10243a"><title>Geofry Mutangili | Document Library</title>
-<style>
-:root{--navy:#10243a;--navy2:#173653;--blue:#2e6d9f;--gold:#c9a96e;--ink:#182534;--muted:#667586;--canvas:#eef2f6;--line:#dce4ec}*{box-sizing:border-box}body{margin:0;background:var(--canvas);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;line-height:1.5}.top{background:var(--navy);color:white;border-bottom:3px solid var(--gold);padding:18px max(18px,calc((100% - 1100px)/2));display:flex;justify-content:space-between;align-items:center;gap:12px}.brand{display:flex;gap:12px;align-items:center}.logo{display:grid;place-items:center;width:44px;height:44px;border:1px solid #ffffff70;border-radius:10px;color:var(--gold);font-weight:800}.brand small{display:block;color:#c8d4df}.hero{background:linear-gradient(125deg,var(--navy),var(--navy2));color:#fff;padding:38px 18px 55px}.hero>div{max-width:1100px;margin:auto}.eyebrow{font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:#e4c994;font-weight:800;margin:0 0 10px}h1{font-size:clamp(2rem,5vw,3.1rem);line-height:1.1;margin:0}.hero p:last-child{color:#d3dee8;max-width:680px}.main{max-width:1100px;width:calc(100% - 32px);margin:-24px auto 38px;position:relative}.panel{background:white;border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 18px 48px #10243a17}.panelhead{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap}.panelhead h2{font-size:1.05rem;margin:0}.muted{font-size:.86rem;color:var(--muted)}input{width:min(360px,100%);padding:11px 13px;border:1px solid #cbd6e0;border-radius:9px;font:inherit}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;padding:18px}.card{border:1px solid var(--line);border-radius:12px;padding:15px;display:grid;grid-template-columns:42px minmax(0,1fr);gap:12px}.icon{height:42px;width:42px;display:grid;place-items:center;border-radius:10px;background:#eaf2f9;color:var(--blue);font-weight:800}.info h2{font-size:.96rem;line-height:1.35;margin:0;overflow-wrap:anywhere}.info p{font-size:.72rem;color:var(--muted);overflow-wrap:anywhere;margin:5px 0 0}.actions{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap}.btn{font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border-radius:8px;padding:9px 12px;font-size:.84rem;font-weight:700}.primary{background:var(--navy);color:white}.secondary{border:1px solid var(--line);color:var(--navy);background:white}.empty{display:none;padding:22px;color:var(--muted)}footer{text-align:center;color:#738091;font-size:.82rem;padding:0 18px 28px}@media(max-width:700px){.grid{grid-template-columns:1fr;padding:12px}.main{width:calc(100% - 20px)}.top{padding:14px}.panelhead{padding:15px}input{width:100%}}
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#10243a">
+<title>Geofry Mutangili | Document Library</title>
 
-.viewer-backdrop{display:none;position:fixed;inset:0;z-index:1000;background:#081421dd;padding:clamp(8px,2vw,24px);align-items:center;justify-content:center}.viewer-backdrop.open{display:flex}.viewer-dialog{width:min(1100px,100%);height:min(92vh,900px);background:#fff;border-radius:14px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 24px 80px #0006}.viewer-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:12px 16px;background:var(--navy);color:white}.viewer-title{font-weight:800;overflow-wrap:anywhere}.viewer-tools{display:flex;gap:8px;flex-wrap:wrap}.viewer-tools .btn{border:0}.viewer-close{background:#ffffff20;color:#fff;border:1px solid #ffffff55}.viewer-frame{border:0;width:100%;flex:1;min-height:0;background:#e9eef3}.viewer-note{margin:0;padding:7px 12px;background:#f5f7fa;color:#526173;font-size:.75rem;border-top:1px solid var(--line)}body.viewer-open{overflow:hidden}@media(max-width:600px){.viewer-dialog{height:96vh}.viewer-head{padding:10px}.viewer-title{font-size:.85rem}}
-</style></head><body>
-<header class="top"><div class="brand"><div class="logo">GM</div><div><strong>GEOFRY MUTANGILI</strong><small>Personal Document Library</small></div></div></header>
-<section class="hero"><div><p class="eyebrow">Document centre</p><h1>My Documents</h1><p>Find a document, view it in your browser, or download a copy.</p></div></section>
-<main class="main"><section class="panel"><div class="panelhead"><div><h2>Available documents</h2><div class="muted" id="count">20 documents</div></div><input id="search" type="search" placeholder="Search documents…" aria-label="Search documents"></div><div class="grid" id="grid">
-<article class="card" data-search="birth certificate birth-cert.pdf.pdf.pdf"><div class="icon">PDF</div><div class="info"><h2>Birth Certificate</h2><p>BIRTH-CERT.pdf.pdf.pdf</p></div><div class="actions"><button class="btn primary view-pdf" type="button" data-file="./BIRTH-CERT.pdf.pdf.pdf">View PDF ↗</button><button class="btn secondary protected-download" type="button" data-file="./BIRTH-CERT.pdf.pdf.pdf">Download PDF ↓</button></div></article>
-<article class="card" data-search="cit cit.pdf.pdf.pdf"><div class="icon">PDF</div><div class="info"><h2>CIT</h2><p>CIT.pdf.pdf.pdf</p></div><div class="actions"><button class="btn primary view-pdf" type="button" data-file="./CIT.pdf.pdf.pdf">View PDF ↗</button><button class="btn secondary protected-download" type="button" data-file="./CIT.pdf.pdf.pdf">Download PDF ↓</button></div></article>
-<article class="card" data-search="cit and transcript cit-and-transcript.pdf.pdf.pdf"><div class="icon">PDF</div><div class="info"><h2>CIT and Transcript</h2><p>CIT-AND-TRANSCRIPT.pdf.pdf.pdf</p></div><div class="actions"><button class="btn primary view-pdf" type="button" data-file="./CIT-AND-TRANSCRIPT.pdf.pdf.pdf">View PDF ↗</button><button class="btn secondary protected-download" type="button" data-file="./CIT-AND-TRANSCRIPT.pdf.pdf.pdf">Download PDF ↓</button></div></article>
-<article class="card" data-search="cit transcript cit-transcript.pdf.pdf.pdf"><div class="icon">PDF</div><div class="info"><h2>CIT Transcript</h2><p>CIT-TRANSCRIPT.pdf.pdf.pdf</p></div><div class="actions"><button class="btn primary view-pdf" type="button" data-file="./CIT-TRANSCRIPT.pdf.pdf.pdf">View PDF ↗</button><button class="btn secondary protected-download" type="button" data-file="./CIT-TRANSCRIPT.pdf.pdf.pdf">Download PDF ↓</button></div></article>
-<article class="card" data-search="dit geofry mutangili transcript dit-geofry-mutangili-transcript.pdf.pdf.pdf"><div class="icon">PDF</div><div class="info"><h2>DIT Geofry Mutangili Transcript</h2><p>DIT-Geofry-Mutangili-Transcript.pdf.pdf.pdf</p></div><div class="actions"><button class="btn primary view-pdf" type="button" data-file="./DIT-Geofry-Mutangili-Transcript.pdf.pdf.pdf">View PDF ↗</button><button class="btn secondary protected-download" type="button" data-file="./DIT-Geofry-Mutangili-Transcript.pdf.pdf.pdf">Download PDF ↓</button></div></article>
-<article class="card" data-search="document 1 doc-20260826-wa0003_260903_014123-(1).pdf.pdf.pdf"><div class="icon">PDF</div><div class="info"><h2>Document 1</h2><p>DOC-20260826-WA0003_260903_014123-(1).pdf.pdf.pdf</p></div><div class="actions"><button class="btn primary view-pdf" type="button" data-file="./DOC-20260826-WA0003_260903_014123-(1).pdf.pdf.pdf">View PDF ↗</button><button class="btn secondary protected-download" type="button" data-file="./DOC-20260826-WA0003_260903_014123-(1).pdf.pdf.pdf">Download PDF ↓</button></div></article>
-<article class="card" data-search="document 2 copy doc-20260826-wa0005_260903_014325-copy.pdf.pdf.pdf"><div class="icon">PDF</div><div class="info"><h2>Document 2 Copy</h2><p>DOC-20260826-WA0005_260903_014325-Copy.pdf.pdf.pdf</p></div><div class="actions"><button class="btn primary view-pdf" type="button" data-file="./DOC-20260826-WA0005_260903_014325-Copy.pdf.pdf.pdf">View PDF ↗</button><button class="btn secondary protected-download" type="button" data-file="./DOC-20260826-WA0005_260903_014325-Copy.pdf.pdf.pdf">Download PDF ↓</button></div></article>
-<article class="card" data-search="document 2 doc-20260826-wa0005_260903_014325.pdf.pdf.pdf"><div class="icon">PDF</div><div class="info"><h2>Document 2</h2><p>DOC-20260826-WA0005_260903_014325.pdf.pdf.pdf</p></div><div class="actions"><button class="btn primary view-pdf" type="button" data-file="./DOC-20260826-WA0005_260903_014325.pdf.pdf.pdf">View PDF ↗</button><button class="btn secondary protected-download" type="button" data-file="./DOC-20260826-WA0005_260903_014325.pdf.pdf.pdf">Download PDF ↓</button></div></article>
-<article class="card" data-search="document id doc-id.pdf.pdf.pdf"><div class="icon">PDF</div><div class="info"><h2>Document ID</h2><p>Doc-ID.pdf.pdf.pdf</p></div><div class="actions"><button class="btn primary view-pdf" type="button" data-file="./Doc-ID.pdf.pdf.pdf">View PDF ↗</button><button class="btn secondary protected-download" type="button" data-file="./Doc-ID.pdf.pdf.pdf">Download PDF ↓</button></div></article>
-<article class="card" data-search="kcpe certificate kcpe-cert.pdf.pdf.pdf"><div class="icon">PDF</div><div class="info"><h2>KCPE Certificate</h2><p>KCPE-CERT.pdf.pdf.pdf</p></div><div class="actions"><button class="btn primary view-pdf" type="button" data-file="./KCPE-CERT.pdf.pdf.pdf">View PDF ↗</button><button class="btn secondary protected-download" type="button" data-file="./KCPE-CERT.pdf.pdf.pdf">Download PDF ↓</button></div></article>
-<article class="card" data-search="oiai certificate - geofry mutangili (1) oiai-certificate-geofry-mutangili-(1).pdf.pdf.pdf"><div class="icon">PDF</div><div class="info"><h2>OIAI Certificate - Geofry Mutangili (1)</h2><p>OIAI-Certificate-Geofry-Mutangili-(1).pdf.pdf.pdf</p></div><div class="actions"><button class="btn primary view-pdf" type="button" data-file="./OIAI-Certificate-Geofry-Mutangili-(1).pdf.pdf.pdf">View PDF ↗</button><button class="btn secondary protected-download" type="button" data-file="./OIAI-Certificate-Geofry-Mutangili-(1).pdf.pdf.pdf">Download PDF ↓</button></div></article>
-<article class="card" data-search="oiai certificate - geofry mutangili oiai-certificate-geofry-mutangili.pdf.pdf.pdf"><div class="icon">PDF</div><div class="info"><h2>OIAI Certificate - Geofry Mutangili</h2><p>OIAI-Certificate-Geofry-Mutangili.pdf.pdf.pdf</p></div><div class="actions"><button class="btn primary view-pdf" type="button" data-file="./OIAI-Certificate-Geofry-Mutangili.pdf.pdf.pdf">View PDF ↗</button><button class="btn secondary protected-download" type="button" data-file="./OIAI-Certificate-Geofry-Mutangili.pdf.pdf.pdf">Download PDF ↓</button></div></article>
-<article class="card" data-search="police clearance certificate pcc-qasklanmp-police-clearance-certificate-wk.pdf.pdf.pdf"><div class="icon">PDF</div><div class="info"><h2>Police Clearance Certificate</h2><p>PCC-QASKLANMP-POLICE-CLEARANCE-CERTIFICATE-WK.pdf.pdf.pdf</p></div><div class="actions"><button class="btn primary view-pdf" type="button" data-file="./PCC-QASKLANMP-POLICE-CLEARANCE-CERTIFICATE-WK.pdf.pdf.pdf">View PDF ↗</button><button class="btn secondary protected-download" type="button" data-file="./PCC-QASKLANMP-POLICE-CLEARANCE-CERTIFICATE-WK.pdf.pdf.pdf">Download PDF ↓</button></div></article>
-<article class="card" data-search="primary leaving certificate primary-leaving.pdf.pdf.pdf"><div class="icon">PDF</div><div class="info"><h2>Primary Leaving Certificate</h2><p>PRIMARY-LEAVING.pdf.pdf.pdf</p></div><div class="actions"><button class="btn primary view-pdf" type="button" data-file="./PRIMARY-LEAVING.pdf.pdf.pdf">View PDF ↗</button><button class="btn secondary protected-download" type="button" data-file="./PRIMARY-LEAVING.pdf.pdf.pdf">Download PDF ↓</button></div></article>
-<article class="card" data-search="secondary leaving certificate secondary-leaving-certificate.pdf.pdf.pdf"><div class="icon">PDF</div><div class="info"><h2>Secondary Leaving Certificate</h2><p>SECONDARY-LEAVING-CERTIFICATE.pdf.pdf.pdf</p></div><div class="actions"><button class="btn primary view-pdf" type="button" data-file="./SECONDARY-LEAVING-CERTIFICATE.pdf.pdf.pdf">View PDF ↗</button><button class="btn secondary protected-download" type="button" data-file="./SECONDARY-LEAVING-CERTIFICATE.pdf.pdf.pdf">Download PDF ↓</button></div></article>
-<article class="card" data-search="secondary result slip secondary-result-slip.pdf.pdf.pdf"><div class="icon">PDF</div><div class="info"><h2>Secondary Result Slip</h2><p>SECONDARY-RESULT-SLIP.pdf.pdf.pdf</p></div><div class="actions"><button class="btn primary view-pdf" type="button" data-file="./SECONDARY-RESULT-SLIP.pdf.pdf.pdf">View PDF ↗</button><button class="btn secondary protected-download" type="button" data-file="./SECONDARY-RESULT-SLIP.pdf.pdf.pdf">Download PDF ↓</button></div></article>
-<article class="card" data-search="skm c364e26082810550 skm_c364e26082810550.pdf.pdf.pdf"><div class="icon">PDF</div><div class="info"><h2>SKM C364e26082810550</h2><p>SKM_C364e26082810550.pdf.pdf.pdf</p></div><div class="actions"><button class="btn primary view-pdf" type="button" data-file="./SKM_C364e26082810550.pdf.pdf.pdf">View PDF ↗</button><button class="btn secondary protected-download" type="button" data-file="./SKM_C364e26082810550.pdf.pdf.pdf">Download PDF ↓</button></div></article>
-<article class="card" data-search="yca catholic yca-catholic.pdf.pdf.pdf"><div class="icon">PDF</div><div class="info"><h2>YCA Catholic</h2><p>YCA-CATHOLIC.pdf.pdf.pdf</p></div><div class="actions"><button class="btn primary view-pdf" type="button" data-file="./YCA-CATHOLIC.pdf.pdf.pdf">View PDF ↗</button><button class="btn secondary protected-download" type="button" data-file="./YCA-CATHOLIC.pdf.pdf.pdf">Download PDF ↓</button></div></article>
-<article class="card" data-search="id (1) id-(1).pdf.pdf.pdf"><div class="icon">PDF</div><div class="info"><h2>ID (1)</h2><p>id-(1).pdf.pdf.pdf</p></div><div class="actions"><button class="btn primary view-pdf" type="button" data-file="./id-(1).pdf.pdf.pdf">View PDF ↗</button><button class="btn secondary protected-download" type="button" data-file="./id-(1).pdf.pdf.pdf">Download PDF ↓</button></div></article>
-<article class="card" data-search="id id.pdf.pdf.pdf"><div class="icon">PDF</div><div class="info"><h2>ID</h2><p>id.pdf.pdf.pdf</p></div><div class="actions"><button class="btn primary view-pdf" type="button" data-file="./id.pdf.pdf.pdf">View PDF ↗</button><button class="btn secondary protected-download" type="button" data-file="./id.pdf.pdf.pdf">Download PDF ↓</button></div></article>
-</div><div class="empty" id="empty">No documents match your search.</div></section></main><div class="viewer-backdrop" id="viewerBackdrop" role="dialog" aria-modal="true" aria-label="PDF preview">
-  <section class="viewer-dialog">
-    <div class="viewer-head">
-      <div class="viewer-title" id="viewerTitle">PDF Preview</div>
-      <div class="viewer-tools">
-        <button class="btn secondary" id="viewerPrint" type="button">Print PDF</button>
-        <button class="btn secondary" id="viewerSave" type="button">Save / Download PDF</button>
-        <button class="btn viewer-close" id="viewerClose" type="button">Close ✕</button>
-      </div>
-    </div>
-    <iframe class="viewer-frame" id="viewerFrame" title="PDF document preview" src="about:blank"></iframe>
-    <p class="viewer-note">Viewing is open. A password is required before using the Print or Save / Download buttons.</p>
-  </section>
-</div>
-<footer>© <span id="year"></span> Geofry Mutangili · Document Library</footer>
-<script>
-const search=document.getElementById('search');const cards=[...document.querySelectorAll('.card')];const empty=document.getElementById('empty');const count=document.getElementById('count');function filterCards(){const q=search.value.trim().toLowerCase();let shown=0;for(const card of cards){const match=card.dataset.search.includes(q);card.style.display=match?'grid':'none';if(match)shown++;}count.textContent=shown+' of '+cards.length+' documents';empty.style.display=shown?'none':'block';}search.addEventListener('input',filterCards);
-// Client-side prompt for print/save/download. This is a convenience prompt, not secure file protection.
-const DOWNLOAD_PASSWORD = 'GEOFRY=';
-const backdrop = document.getElementById('viewerBackdrop');
-const viewerFrame = document.getElementById('viewerFrame');
-const viewerTitle = document.getElementById('viewerTitle');
-let activeFile = '';
-function askForPassword(action) {
-  const entered = window.prompt('Enter the password to ' + action + ':');
-  if (entered === null) return false;
-  if (entered !== DOWNLOAD_PASSWORD) {
-    window.alert('Incorrect password. ' + action.charAt(0).toUpperCase() + action.slice(1) + ' cancelled.');
-    return false;
-  }
-  return true;
+<style>
+:root{--navy:#10243a;--navy2:#173653;--blue:#2e6d9f;--gold:#c9a96e;--ink:#182534;--muted:#667586;--canvas:#eef2f6;--line:#dce4ec}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;line-height:1.5}
+.top{background:var(--navy);color:white;border-bottom:3px solid var(--gold);padding:18px max(18px,calc((100% - 1100px)/2));display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand{display:flex;gap:12px;align-items:center}
+.logo{display:grid;place-items:center;width:44px;height:44px;border:1px solid #ffffff70;border-radius:10px;color:var(--gold);font-weight:800}
+.brand small{display:block;color:#c8d4df}
+.hero{background:linear-gradient(125deg,var(--navy),var(--navy2));color:#fff;padding:38px 18px 55px}
+.hero>div{max-width:1100px;margin:auto}
+.eyebrow{font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:#e4c994;font-weight:800;margin:0 0 10px}
+h1{font-size:clamp(2rem,5vw,3.1rem);line-height:1.1;margin:0}
+.hero p:last-child{color:#d3dee8;max-width:680px}
+.main{max-width:1100px;width:calc(100% - 32px);margin:-24px auto 38px;position:relative}
+.panel{background:white;border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 18px 48px #10243a17}
+.panelhead{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap}
+.panelhead h2{font-size:1.05rem;margin:0}
+.muted{font-size:.86rem;color:var(--muted)}
+input{width:min(360px,100%);padding:11px 13px;border:1px solid #cbd6e0;border-radius:9px;font:inherit}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;padding:18px}
+.card{border:1px solid var(--line);border-radius:12px;padding:15px;display:grid;grid-template-columns:42px minmax(0,1fr);gap:12px}
+.icon{height:42px;width:42px;display:grid;place-items:center;border-radius:10px;background:#eaf2f9;color:var(--blue);font-weight:800}
+.info h2{font-size:.96rem;line-height:1.35;margin:0;overflow-wrap:anywhere}
+.info p{font-size:.72rem;color:var(--muted);overflow-wrap:anywhere;margin:5px 0 0}
+.actions{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap}
+.btn{font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border-radius:8px;padding:9px 12px;font-size:.84rem;font-weight:700}
+.primary{background:var(--navy);color:white}
+.secondary{border:1px solid var(--line);color:var(--navy);background:white}
+.empty{display:none;padding:22px;color:var(--muted)}
+footer{text-align:center;color:#738091;font-size:.82rem;padding:0 18px 28px}
+
+@media(max-width:700px){
+.grid{grid-template-columns:1fr;padding:12px}
+.main{width:calc(100% - 20px)}
+.top{padding:14px}
+.panelhead{padding:15px}
+input{width:100%}
 }
-function openViewer(file, title) {
-  // Require the password before opening the document for viewing.
-  if (!askForPassword('view this document')) return;
-  activeFile = file;
-  viewerTitle.textContent = title || 'PDF Preview';
-  // Hide the built-in PDF toolbar where the browser supports this fragment option.
-  viewerFrame.src = file + '#toolbar=0&navpanes=0&view=FitH';
+
+.viewer-backdrop{display:none;position:fixed;inset:0;z-index:1000;background:#081421dd;padding:clamp(8px,2vw,24px);align-items:center;justify-content:center}
+.viewer-backdrop.open{display:flex}
+.viewer-dialog{width:min(1100px,100%);height:min(92vh,900px);background:#fff;border-radius:14px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 24px 80px #0006}
+.viewer-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:12px 16px;background:var(--navy);color:white}
+.viewer-title{font-weight:800;overflow-wrap:anywhere}
+.viewer-tools{display:flex;gap:8px;flex-wrap:wrap}
+.viewer-tools .btn{border:0}
+.viewer-close{background:#ffffff20;color:#fff;border:1px solid #ffffff55}
+.viewer-frame{border:0;width:100%;flex:1;min-height:0;background:#e9eef3}
+.viewer-note{margin:0;padding:7px 12px;background:#f5f7fa;color:#526173;font-size:.75rem;border-top:1px solid var(--line)}
+body.viewer-open{overflow:hidden}
+
+@media(max-width:600px){
+.viewer-dialog{height:96vh}
+.viewer-head{padding:10px}
+.viewer-title{font-size:.85rem}
+}
+
+/* Password dialog */
+.password-backdrop{display:none;position:fixed;inset:0;z-index:2000;background:#081421dd;padding:18px;align-items:center;justify-content:center}
+.password-backdrop.open{display:flex}
+.password-dialog{width:min(420px,100%);background:#fff;border-radius:14px;padding:24px;box-shadow:0 24px 80px #0006}
+.password-dialog h2{margin:0 0 8px;color:var(--navy);font-size:1.2rem}
+.password-dialog p{margin:0 0 16px;color:var(--muted);font-size:.92rem}
+.password-dialog label{display:block;font-weight:700;font-size:.88rem;margin-bottom:6px}
+.password-dialog input{width:100%;margin-bottom:8px}
+.password-error{min-height:1.35em;color:#b42318;font-size:.84rem;margin:3px 0 12px}
+.password-actions{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}
+.password-actions button{font:inherit;cursor:pointer;border-radius:8px;padding:9px 13px;font-weight:700}
+.password-submit{background:var(--navy);color:white;border:1px solid var(--navy)}
+.password-cancel{background:white;color:var(--navy);border:1px solid var(--line)}
+
+</style>
+</head>
+
+<body>
+
+<header class="top">
+<div class="brand">
+<div class="logo">GM</div>
+<div>
+<strong>GEOFRY MUTANGILI</strong>
+<small>Personal Document Library</small>
+</div>
+</div>
+</header>
+
+<section class="hero">
+<div>
+<p class="eyebrow">Document centre</p>
+<h1>My Documents</h1>
+<p>Find a document, view it in your browser, or download a copy.</p>
+</div>
+</section>
+
+<main class="main">
+<section class="panel">
+
+<div class="panelhead">
+<div>
+<h2>Available documents</h2>
+<div class="muted" id="count">21 documents</div>
+</div>
+<input id="search" type="search" placeholder="Search documents…" aria-label="Search documents">
+</div>
+
+<div class="grid" id="grid">
+
+<article class="card" data-search="birth certificate birth-cert.pdf.pdf.pdf">
+<div class="icon">PDF</div>
+<div class="info"><h2>Birth Certificate</h2><p>BIRTH-CERT.pdf.pdf.pdf</p></div>
+<div class="actions">
+<button class="btn primary view-pdf" type="button" data-file="./BIRTH-CERT.pdf.pdf.pdf">View PDF ↗</button>
+<button class="btn secondary protected-download" type="button" data-file="./BIRTH-CERT.pdf.pdf.pdf">Download PDF ↓</button>
+</div>
+</article>
+
+<article class="card" data-search="cit cit.pdf.pdf.pdf">
+<div class="icon">PDF</div>
+<div class="info"><h2>CIT</h2><p>CIT.pdf.pdf.pdf</p></div>
+<div class="actions">
+<button class="btn primary view-pdf" type="button" data-file="./CIT.pdf.pdf.pdf">View PDF ↗</button>
+<button class="btn secondary protected-download" type="button" data-file="./CIT.pdf.pdf.pdf">Download PDF ↓</button>
+</div>
+</article>
+
+<article class="card" data-search="cit and transcript cit-and-transcript.pdf.pdf.pdf">
+<div class="icon">PDF</div>
+<div class="info"><h2>CIT and Transcript</h2><p>CIT-AND-TRANSCRIPT.pdf.pdf.pdf</p></div>
+<div class="actions">
+<button class="btn primary view-pdf" type="button" data-file="./CIT-AND-TRANSCRIPT.pdf.pdf.pdf">View PDF ↗</button>
+<button class="btn secondary protected-download" type="button" data-file="./CIT-AND-TRANSCRIPT.pdf.pdf.pdf">Download PDF ↓</button>
+</div>
+</article>
+
+<article class="card" data-search="cit transcript cit-transcript.pdf.pdf.pdf">
+<div class="icon">PDF</div>
+<div class="info"><h2>CIT Transcript</h2><p>CIT-TRANSCRIPT.pdf.pdf.pdf</p></div>
+<div class="actions">
+<button class="btn primary view-pdf" type="button" data-file="./CIT-TRANSCRIPT.pdf.pdf.pdf">View PDF ↗</button>
+<button class="btn secondary protected-download" type="button" data-file="./CIT-TRANSCRIPT.pdf.pdf.pdf">Download PDF ↓</button>
+</div>
+</article>
+
+<article class="card" data-search="dit geofry mutangili transcript dit-geofry-mutangili-transcript.pdf.pdf.pdf">
+<div class="icon">PDF</div>
+<div class="info"><h2>DIT Geofry Mutangili Transcript</h2><p>DIT-Geofry-Mutangili-Transcript.pdf.pdf.pdf</p></div>
+<div class="actions">
+<button class="btn primary view-pdf" type="button" data-file="./DIT-Geofry-Mutangili-Transcript.pdf.pdf.pdf">View PDF ↗</button>
+<button class="btn secondary protected-download" type="button" data-file="./DIT-Geofry-Mutangili-Transcript.pdf.pdf.pdf">Download PDF ↓</button>
+</div>
+</article>
+
+<article class="card" data-search="document 1 doc-20260826-wa0003_260903_014123-(1).pdf.pdf.pdf">
+<div class="icon">PDF</div>
+<div class="info"><h2>Document 1</h2><p>DOC-20260826-WA0003_260903_014123-(1).pdf.pdf.pdf</p></div>
+<div class="actions">
+<button class="btn primary view-pdf" type="button" data-file="./DOC-20260826-WA0003_260903_014123-(1).pdf.pdf.pdf">View PDF ↗</button>
+<button class="btn secondary protected-download" type="button" data-file="./DOC-20260826-WA0003_260903_014123-(1).pdf.pdf.pdf">Download PDF ↓</button>
+</div>
+</article>
+
+<article class="card" data-search="document 2 copy doc-20260826-wa0005_260903_014325-copy.pdf.pdf.pdf">
+<div class="icon">PDF</div>
+<div class="info"><h2>Document 2 Copy</h2><p>DOC-20260826-WA0005_260903_014325-Copy.pdf.pdf.pdf</p></div>
+<div class="actions">
+<button class="btn primary view-pdf" type="button" data-file="./DOC-20260826-WA0005_260903_014325-Copy.pdf.pdf.pdf">View PDF ↗</button>
+<button class="btn secondary protected-download" type="button" data-file="./DOC-20260826-WA0005_260903_014325-Copy.pdf.pdf.pdf">Download PDF ↓</button>
+</div>
+</article>
+
+<article class="card" data-search="document 2 doc-20260826-wa0005_260903_014325.pdf.pdf.pdf">
+<div class="icon">PDF</div>
+<div class="info"><h2>Document 2</h2><p>DOC-20260826-WA0005_260903_014325.pdf.pdf.pdf</p></div>
+<div class="actions">
+<button class="btn primary view-pdf" type="button" data-file="./DOC-20260826-WA0005_260903_014325.pdf.pdf.pdf">View PDF ↗</button>
+<button class="btn secondary protected-download" type="button" data-file="./DOC-20260826-WA0005_260903_014325.pdf.pdf.pdf">Download PDF ↓</button>
+</div>
+</article>
+
+<article class="card" data-search="document id doc-id.pdf.pdf.pdf">
+<div class="icon">PDF</div>
+<div class="info"><h2>Document ID</h2><p>Doc-ID.pdf.pdf.pdf</p></div>
+<div class="actions">
+<button class="btn primary view-pdf" type="button" data-file="./Doc-ID.pdf.pdf.pdf">View PDF ↗</button>
+<button class="btn secondary protected-download" type="button" data-file="./Doc-ID.pdf.pdf.pdf">Download PDF ↓</button>
+</div>
+</article>
+
+<article class="card" data-search="kcpe certificate kcpe-cert.pdf.pdf.pdf">
+<div class="icon">PDF</div>
+<div class="info"><h2>KCPE Certificate</h2><p>KCPE-CERT.pdf.pdf.pdf</p></div>
+<div class="actions">
+<button class="btn primary view-pdf" type="button" data-file="./KCPE-CERT.pdf.pdf.pdf">View PDF ↗</button>
+<button class="btn secondary protected-download" type="button" data-file="./KCPE-CERT.pdf.pdf.pdf">Download PDF ↓</button>
+</div>
+</article>
+
+<article class="card" data-search="oiai certificate geofry mutangili 1 oiai-certificate-geofry-mutangili-(1).pdf.pdf.pdf">
+<div class="icon">PDF</div>
+<div class="info"><h2>OIAI Certificate - Geofry Mutangili (1)</h2><p>OIAI-Certificate-Geofry-Mutangili-(1).pdf.pdf.pdf</p></div>
+<div class="actions">
+<button class="btn primary view-pdf" type="button" data-file="./OIAI-Certificate-Geofry-Mutangili-(1).pdf.pdf.pdf">View PDF ↗</button>
+<button class="btn secondary protected-download" type="button" data-file="./OIAI-Certificate-Geofry-Mutangili-(1).pdf.pdf.pdf">Download PDF ↓</button>
+</div>
+</article>
+
+<article class="card" data-search="oiai certificate geofry mutangili oiai-certificate-geofry-mutangili.pdf.pdf.pdf">
+<div class="icon">PDF</div>
+<div class="info"><h2>OIAI Certificate - Geofry Mutangili</h2><p>OIAI-Certificate-Geofry-Mutangili.pdf.pdf.pdf</p></div>
+<div class="actions">
+<button class="btn primary view-pdf" type="button" data-file="./OIAI-Certificate-Geofry-Mutangili.pdf.pdf.pdf">View PDF ↗</button>
+<button class="btn secondary protected-download" type="button" data-file="./OIAI-Certificate-Geofry-Mutangili.pdf.pdf.pdf">Download PDF ↓</button>
+</div>
+</article>
+
+<article class="card" data-search="police clearance certificate pcc-qasklanmp-police-clearance-certificate-wk.pdf.pdf.pdf">
+<div class="icon">PDF</div>
+<div class="info"><h2>Police Clearance Certificate</h2><p>PCC-QASKLANMP-POLICE-CLEARANCE-CERTIFICATE-WK.pdf.pdf.pdf</p></div>
+<div class="actions">
+<button class="btn primary view-pdf" type="button" data-file="./PCC-QASKLANMP-POLICE-CLEARANCE-CERTIFICATE-WK.pdf.pdf.pdf">View PDF ↗</button>
+<button class="btn secondary protected-download" type="button" data-file="./PCC-QASKLANMP-POLICE-CLEARANCE-CERTIFICATE-WK.pdf.pdf.pdf">Download PDF ↓</button>
+</div>
+</article>
+
+<article class="card" data-search="primary leaving certificate primary-leaving.pdf.pdf.pdf">
+<div class="icon">PDF</div>
+<div class="info"><h2>Primary Leaving Certificate</h2><p>PRIMARY-LEAVING.pdf.pdf.pdf</p></div>
+<div class="actions">
+<button class="btn primary view-pdf" type="button" data-file="./PRIMARY-LEAVING.pdf.pdf.pdf">View PDF ↗</button>
+<button class="btn secondary protected-download" type="button" data-file="./PRIMARY-LEAVING.pdf.pdf.pdf">Download PDF ↓</button>
+</div>
+</article>
+
+<article class="card" data-search="secondary leaving certificate secondary-leaving-certificate.pdf.pdf.pdf">
+<div class="icon">PDF</div>
+<div class="info"><h2>Secondary Leaving Certificate</h2><p>SECONDARY-LEAVING-CERTIFICATE.pdf.pdf.pdf</p></div>
+<div class="actions">
+<button class="btn primary view-pdf" type="button" data-file="./SECONDARY-LEAVING-CERTIFICATE.pdf.pdf.pdf">View PDF ↗</button>
+<button class="btn secondary protected-download" type="button" data-file="./SECONDARY-LEAVING-CERTIFICATE.pdf.pdf.pdf">Download PDF ↓</button>
+</div>
+</article>
+
+<article class="card" data-search="secondary result slip secondary-result-slip.pdf.pdf.pdf">
+<div class="icon">PDF</div>
+<div class="info"><h2>Secondary Result Slip</h2><p>SECONDARY-RESULT-SLIP.pdf.pdf.pdf</p></div>
+<div class="actions">
+<button class="btn primary view-pdf" type="button" data-file="./SECONDARY-RESULT-SLIP.pdf.pdf.pdf">View PDF ↗</button>
+<button class="btn secondary protected-download" type="button" data-file="./SECONDARY-RESULT-SLIP.pdf.pdf.pdf">Download PDF ↓</button>
+</div>
+</article>
+
+<article class="card" data-search="skm c364e26082810550 skm_c364e26082810550.pdf.pdf.pdf">
+<div class="icon">PDF</div>
+<div class="info"><h2>SKM C364e26082810550</h2><p>SKM_C364e26082810550.pdf.pdf.pdf</p></div>
+<div class="actions">
+<button class="btn primary view-pdf" type="button" data-file="./SKM_C364e26082810550.pdf.pdf.pdf">View PDF ↗</button>
+<button class="btn secondary protected-download" type="button" data-file="./SKM_C364e26082810550.pdf.pdf.pdf">Download PDF ↓</button>
+</div>
+</article>
+
+<article class="card" data-search="yca catholic yca-catholic.pdf.pdf.pdf">
+<div class="icon">PDF</div>
+<div class="info"><h2>YCA Catholic</h2><p>YCA-CATHOLIC.pdf.pdf.pdf</p></div>
+<div class="actions">
+<button class="btn primary view-pdf" type="button" data-file="./YCA-CATHOLIC.pdf.pdf.pdf">View PDF ↗</button>
+<button class="btn secondary protected-download" type="button" data-file="./YCA-CATHOLIC.pdf.pdf.pdf">Download PDF ↓</button>
+</div>
+</article>
+
+<article class="card" data-search="id 1 id-(1).pdf.pdf.pdf">
+<div class="icon">PDF</div>
+<div class="info"><h2>ID (1)</h2><p>id-(1).pdf.pdf.pdf</p></div>
+<div class="actions">
+<button class="btn primary view-pdf" type="button" data-file="./id-(1).pdf.pdf.pdf">View PDF ↗</button>
+<button class="btn secondary protected-download" type="button" data-file="./id-(1).pdf.pdf.pdf">Download PDF ↓</button>
+</div>
+</article>
+
+<article class="card" data-search="id id.pdf.pdf.pdf">
+<div class="icon">PDF</div>
+<div class="info"><h2>ID</h2><p>id.pdf.pdf.pdf</p></div>
+<div class="actions">
+<button class="btn primary view-pdf" type="button" data-file="./id.pdf.pdf.pdf">View PDF ↗</button>
+<button class="btn secondary protected-download" type="button" data-file="./id.pdf.pdf.pdf">Download PDF ↓</button>
+</div>
+</article>
+
+<!-- NEW CV DOCUMENT -->
+<article class="card" data-search="geofry mutangili cv geofry_mutangili_cv.pdf">
+<div class="icon">PDF</div>
+<div class="info">
+<h2>Geofry Mutangili CV</h2>
+<p>Geofry_Mutangili_CV.pdf</p>
+</div>
+<div class="actions">
+<button class="btn primary view-pdf" type="button" data-file="./Geofry_Mutangili_CV.pdf">View PDF ↗</button>
+<button class="btn secondary protected-download" type="button" data-file="./Geofry_Mutangili_CV.pdf">Download PDF ↓</button>
+</div>
+</article>
+
+</div>
+
+<div class="empty" id="empty">No documents match your search.</div>
+</section>
+</main>
+
+<div class="viewer-backdrop" id="viewerBackdrop" role="dialog" aria-modal="true" aria-label="PDF preview">
+<section class="viewer-dialog">
+<div class="viewer-head">
+<div class="viewer-title" id="viewerTitle">PDF Preview</div>
+<div class="viewer-tools">
+<button class="btn secondary" id="viewerPrint" type="button">Print PDF</button>
+<button class="btn secondary" id="viewerSave" type="button">Save / Download PDF</button>
+<button class="btn viewer-close" id="viewerClose" type="button">Close ✕</button>
+</div>
+</div>
+<iframe class="viewer-frame" id="viewerFrame" title="PDF document preview" src="about:blank"></iframe>
+<p class="viewer-note">Viewing is open. A password is required before using the Print or Save / Download buttons.</p>
+</section>
+</div>
+
+
+<div class="password-backdrop" id="passwordBackdrop" role="dialog" aria-modal="true" aria-labelledby="passwordHeading">
+  <form class="password-dialog" id="passwordForm">
+    <h2 id="passwordHeading">Password required</h2>
+    <p id="passwordMessage">Enter the password to continue.</p>
+    <label for="actionPassword">Password</label>
+    <input id="actionPassword" name="password" type="password" autocomplete="current-password" required>
+    <div class="password-error" id="passwordError" role="alert" aria-live="polite"></div>
+    <div class="password-actions">
+      <button class="password-cancel" id="passwordCancel" type="button">Cancel</button>
+      <button class="password-submit" type="submit">Continue</button>
+    </div>
+  </form>
+</div>
+
+<footer>© <span id="year"></span> Geofry Mutangili · Document Library</footer>
+
+<script>
+const search=document.getElementById('search');
+const cards=[...document.querySelectorAll('.card')];
+const empty=document.getElementById('empty');
+const count=document.getElementById('count');
+
+function filterCards(){
+  const q=search.value.trim().toLowerCase();
+  let shown=0;
+  for(const card of cards){
+    const match=card.dataset.search.includes(q);
+    card.style.display=match?'grid':'none';
+    if(match)shown++;
+  }
+  count.textContent=shown+' of '+cards.length+' documents';
+  empty.style.display=shown?'none':'block';
+}
+search.addEventListener('input',filterCards);
+
+const DOWNLOAD_PASSWORD='GEOFRY=';
+const backdrop=document.getElementById('viewerBackdrop');
+const viewerFrame=document.getElementById('viewerFrame');
+const viewerTitle=document.getElementById('viewerTitle');
+const passwordBackdrop=document.getElementById('passwordBackdrop');
+const passwordForm=document.getElementById('passwordForm');
+const passwordInput=document.getElementById('actionPassword');
+const passwordMessage=document.getElementById('passwordMessage');
+const passwordError=document.getElementById('passwordError');
+const passwordCancel=document.getElementById('passwordCancel');
+let activeFile='';
+let passwordResolver=null;
+
+function askForPassword(action){
+  passwordMessage.textContent='Enter the password to '+action+'.';
+  passwordError.textContent='';
+  passwordInput.value='';
+  passwordBackdrop.classList.add('open');
+  passwordInput.focus();
+  return new Promise(resolve=>{
+    passwordResolver=resolve;
+  });
+}
+
+function finishPasswordPrompt(accepted){
+  passwordBackdrop.classList.remove('open');
+  passwordInput.value='';
+  passwordInput.disabled=false;
+  passwordForm.querySelector('.password-submit').disabled=false;
+  if(passwordResolver){
+    const resolve=passwordResolver;
+    passwordResolver=null;
+    resolve(accepted);
+  }
+}
+
+passwordForm.addEventListener('submit',event=>{
+  event.preventDefault();
+  if(passwordInput.value===DOWNLOAD_PASSWORD){
+    finishPasswordPrompt(true);
+  }else{
+    passwordError.textContent='Incorrect password. Action cancelled.';
+    passwordInput.disabled=true;
+    passwordForm.querySelector('.password-submit').disabled=true;
+    setTimeout(()=>finishPasswordPrompt(false),900);
+  }
+});
+passwordCancel.addEventListener('click',()=>finishPasswordPrompt(false));
+passwordBackdrop.addEventListener('click',event=>{
+  if(event.target===passwordBackdrop)finishPasswordPrompt(false);
+});
+document.addEventListener('keydown',event=>{
+  if(event.key==='Escape'&&passwordBackdrop.classList.contains('open'))finishPasswordPrompt(false);
+});
+
+function openViewer(file,title){
+  activeFile=file;
+  viewerTitle.textContent=title||'PDF Preview';
+  viewerFrame.src=file+'#toolbar=0&navpanes=0&view=FitH';
   backdrop.classList.add('open');
   document.body.classList.add('viewer-open');
 }
-function closeViewer() {
+
+function closeViewer(){
   backdrop.classList.remove('open');
   document.body.classList.remove('viewer-open');
-  viewerFrame.src = 'about:blank';
-  activeFile = '';
+  viewerFrame.src='about:blank';
+  activeFile='';
 }
-document.querySelectorAll('.view-pdf').forEach(button => {
-  button.addEventListener('click', () => {
-    const card = button.closest('.card');
-    openViewer(button.dataset.file, card ? card.querySelector('.info h2').textContent : 'PDF Preview');
+
+document.querySelectorAll('.view-pdf').forEach(button=>{
+  button.addEventListener('click',async()=>{
+    const card=button.closest('.card');
+    const title=card?card.querySelector('.info h2').textContent:'PDF Preview';
+    if(!await askForPassword('view this document'))return;
+    openViewer(button.dataset.file,title);
   });
 });
-document.querySelectorAll('.protected-download').forEach(button => {
-  button.addEventListener('click', () => {
-    const file = button.dataset.file;
-    if (!askForPassword('download this document')) return;
-    const a = document.createElement('a'); a.href = file; a.download = ''; document.body.appendChild(a); a.click(); a.remove();
+
+document.querySelectorAll('.protected-download').forEach(button=>{
+  button.addEventListener('click',async()=>{
+    const file=button.dataset.file;
+    if(!await askForPassword('download this document'))return;
+    const a=document.createElement('a');
+    a.href=file;
+    a.download='';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
   });
 });
-document.getElementById('viewerSave').addEventListener('click', () => {
-  if (!activeFile || !askForPassword('save or download this document')) return;
-  const a = document.createElement('a'); a.href = activeFile; a.download = ''; document.body.appendChild(a); a.click(); a.remove();
+
+document.getElementById('viewerSave').addEventListener('click',async()=>{
+  if(!activeFile||!await askForPassword('save or download this document'))return;
+  const a=document.createElement('a');
+  a.href=activeFile;
+  a.download='';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
 });
-document.getElementById('viewerPrint').addEventListener('click', () => {
-  if (!activeFile || !askForPassword('print this document')) return;
-  // Open the PDF after the password check; user can then choose Print in the browser's PDF viewer.
-  const printTab = window.open(activeFile + '#toolbar=1&navpanes=0', '_blank', 'noopener');
-  if (!printTab) window.alert('Your browser blocked the new tab. Allow pop-ups for this site, then click Print PDF again.');
+
+document.getElementById('viewerPrint').addEventListener('click',async()=>{
+  if(!activeFile)return;
+  // Open the tab during the click gesture so popup blockers are less likely to block it.
+  const printTab=window.open('about:blank','_blank');
+  if(!printTab){
+    window.alert('Your browser blocked the new tab. Allow pop-ups for this site, then click Print PDF again.');
+    return;
+  }
+  if(!await askForPassword('print this document')){
+    printTab.close();
+    return;
+  }
+  printTab.location.href=activeFile+'#toolbar=1&navpanes=0';
 });
-document.getElementById('viewerClose').addEventListener('click', closeViewer);
-backdrop.addEventListener('click', event => { if (event.target === backdrop) closeViewer(); });
-document.addEventListener('keydown', event => { if (event.key === 'Escape' && backdrop.classList.contains('open')) closeViewer(); });
+
+document.getElementById('viewerClose').addEventListener('click',closeViewer);
+
+backdrop.addEventListener('click',event=>{
+  if(event.target===backdrop)closeViewer();
+});
+
+document.addEventListener('keydown',event=>{
+  if(event.key==='Escape'&&backdrop.classList.contains('open'))closeViewer();
+});
+
 document.getElementById('year').textContent=new Date().getFullYear();
-</script></body></html>
+filterCards();
+</script>
+
+</body>
+</html>
