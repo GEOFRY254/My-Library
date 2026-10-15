@@ -308,7 +308,7 @@ body.viewer-open{overflow:hidden}
 </div>
 </div>
 <iframe class="viewer-frame" id="viewerFrame" title="PDF document preview" src="about:blank"></iframe>
-<p class="viewer-note">Viewing is open. The library asks for a password before its Download, Save, and Print actions. Browser controls or direct file links may still bypass HTML-only restrictions.</p>
+<p class="viewer-note">A password is required to view or download documents. Browser tools may still allow saving or capturing a document after it has opened.</p>
 </section>
 </div>
 
@@ -319,6 +319,12 @@ const search=document.getElementById('search');
 const cards=[...document.querySelectorAll('.card')];
 const empty=document.getElementById('empty');
 const count=document.getElementById('count');
+
+/*
+  IMPORTANT: Replace this placeholder with your deployed Cloudflare Worker URL,
+  for example: https://geofry-document-protection.YOUR-SUBDOMAIN.workers.dev
+*/
+const API_BASE='https://YOUR-WORKER-NAME.YOUR-SUBDOMAIN.workers.dev';
 
 function filterCards(){
   const q=search.value.trim().toLowerCase();
@@ -333,91 +339,126 @@ function filterCards(){
 }
 search.addEventListener('input',filterCards);
 
-const DOWNLOAD_PASSWORD='GEOFRY=';
+const DOWNLOAD_PASSWORD_PROMPT='Enter the password to download this document:';
+const VIEW_PASSWORD_PROMPT='Enter the password to view this document:';
 const backdrop=document.getElementById('viewerBackdrop');
 const viewerFrame=document.getElementById('viewerFrame');
 const viewerTitle=document.getElementById('viewerTitle');
 let activeFile='';
+let activeViewUrl='';
 
-function askForPassword(action){
-  const entered=window.prompt('Enter the password to '+action+':');
-  if(entered===null)return false;
-  if(entered!==DOWNLOAD_PASSWORD){
-    window.alert('Incorrect password. '+action.charAt(0).toUpperCase()+action.slice(1)+' cancelled.');
-    return false;
+function fileNameFromButton(button){
+  return (button.dataset.file||'').split('/').pop();
+}
+function askForPassword(){
+  const entered=window.prompt(DOWNLOAD_PASSWORD_PROMPT);
+  if(entered===null)return null;
+  if(!entered){
+    window.alert('Password is required.');
+    return null;
   }
-  return true;
+  return entered;
 }
-
-function openViewer(file,title){
-  activeFile=file;
-  viewerTitle.textContent=title||'PDF Preview';
-  viewerFrame.src=file+'#toolbar=0&navpanes=0&scrollbar=0&view=FitH';
-  backdrop.classList.add('open');
-  document.body.classList.add('viewer-open');
+async function protectedView(file,password){
+  const response=await fetch(API_BASE+'/view',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({file,password})
+  });
+  if(!response.ok){
+    let message='Viewing denied. Check the password and try again.';
+    try{const data=await response.json();if(data.error)message=data.error;}catch(_){}
+    throw new Error(message);
+  }
+  return await response.blob();
 }
-
+async function openViewer(file,title){
+  const password=window.prompt(VIEW_PASSWORD_PROMPT);
+  if(password===null)return;
+  if(!password){window.alert('Password is required to view this document.');return;}
+  const viewButtons=[...document.querySelectorAll('.view-pdf')];
+  viewButtons.forEach(button=>button.disabled=true);
+  try{
+    const blob=await protectedView(file,password);
+    if(activeViewUrl)URL.revokeObjectURL(activeViewUrl);
+    activeViewUrl=URL.createObjectURL(blob);
+    activeFile=file;
+    viewerTitle.textContent=title||'PDF Preview';
+    viewerFrame.src=activeViewUrl+'#toolbar=0&navpanes=0&view=FitH';
+    backdrop.classList.add('open');
+    document.body.classList.add('viewer-open');
+  }catch(error){window.alert(error.message||'Unable to open this document.');}
+  finally{viewButtons.forEach(button=>button.disabled=false);}
+}
 function closeViewer(){
   backdrop.classList.remove('open');
   document.body.classList.remove('viewer-open');
   viewerFrame.src='about:blank';
   activeFile='';
+  if(activeViewUrl){URL.revokeObjectURL(activeViewUrl);activeViewUrl='';}
 }
-
 document.querySelectorAll('.view-pdf').forEach(button=>{
   button.addEventListener('click',()=>{
     const card=button.closest('.card');
-    openViewer(
-      button.dataset.file,
-      card?card.querySelector('.info h2').textContent:'PDF Preview'
-    );
+    openViewer(fileNameFromButton(button),
+      card?card.querySelector('.info h2').textContent:'PDF Preview');
   });
 });
-
-document.querySelectorAll('.protected-download').forEach(button=>{
-  button.addEventListener('click',()=>{
-    const file=button.dataset.file;
-    if(!askForPassword('download this document'))return;
-    const a=document.createElement('a');
-    a.href=file;
-    a.download='';
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
+async function protectedDownload(file, password){
+  const response=await fetch(API_BASE+'/download',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({file,password})
   });
-});
-
-document.getElementById('viewerSave').addEventListener('click',()=>{
-  if(!activeFile||!askForPassword('save or download this document'))return;
+  if(!response.ok){
+    let message='Download denied. Check the password and try again.';
+    try{const data=await response.json();if(data.error)message=data.error;}catch(_){}
+    throw new Error(message);
+  }
+  const blob=await response.blob();
+  const url=URL.createObjectURL(blob);
   const a=document.createElement('a');
-  a.href=activeFile;
-  a.download='';
+  a.href=url;
+  a.download=file;
   document.body.appendChild(a);
   a.click();
   a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),30000);
+}
+document.querySelectorAll('.protected-download').forEach(button=>{
+  button.addEventListener('click',async()=>{
+    const password=askForPassword();
+    if(password===null)return;
+    button.disabled=true;
+    try{
+      await protectedDownload(fileNameFromButton(button),password);
+    }catch(error){
+      window.alert(error.message||'Download failed. Please try again.');
+    }finally{
+      button.disabled=false;
+    }
+  });
 });
-
+document.getElementById('viewerSave').addEventListener('click',async()=>{
+  if(!activeFile)return;
+  const password=askForPassword();
+  if(password===null)return;
+  const button=document.getElementById('viewerSave');
+  button.disabled=true;
+  try{await protectedDownload(activeFile,password);}
+  catch(error){window.alert(error.message||'Download failed. Please try again.');}
+  finally{button.disabled=false;}
+});
 document.getElementById('viewerPrint').addEventListener('click',()=>{
-  if(!activeFile||!askForPassword('print this document'))return;
-  const printTab=window.open(
-    activeFile+'#toolbar=1&navpanes=0',
-    '_blank'
-  );
-  if(!printTab){
-    window.alert('Your browser blocked the new tab. Allow pop-ups for this site, then click Print PDF again.');
-  }
+  window.alert('Printing cannot be securely blocked while a PDF is viewable without a password. Use the browser viewer controls only for documents you are comfortable allowing visitors to save or print.');
 });
-
 document.getElementById('viewerClose').addEventListener('click',closeViewer);
-
 backdrop.addEventListener('click',event=>{
   if(event.target===backdrop)closeViewer();
 });
-
 document.addEventListener('keydown',event=>{
   if(event.key==='Escape'&&backdrop.classList.contains('open'))closeViewer();
 });
-
 document.getElementById('year').textContent=new Date().getFullYear();
 filterCards();
 </script>
