@@ -61,6 +61,8 @@ function askForPassword(action) {
   return true;
 }
 function openViewer(file, title) {
+  // Require the password before opening the document for viewing.
+  if (!askForPassword('view this document')) return;
   activeFile = file;
   viewerTitle.textContent = title || 'PDF Preview';
   // Hide the built-in PDF toolbar where the browser supports this fragment option.
