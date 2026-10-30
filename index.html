@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -92,7 +91,7 @@ body.viewer-open{overflow:hidden}
 <div class="panelhead">
 <div>
 <h2>Available documents</h2>
-<div class="muted" id="count">24 documents</div>
+<div class="muted" id="count">21 documents</div>
 </div>
 <input id="search" type="search" placeholder="Search documents…" aria-label="Search documents">
 </div>
@@ -279,6 +278,7 @@ body.viewer-open{overflow:hidden}
 </div>
 </article>
 
+<!-- NEW CV DOCUMENT -->
 <article class="card" data-search="geofry mutangili cv geofry_mutangili_cv.pdf">
 <div class="icon">PDF</div>
 <div class="info">
@@ -291,8 +291,7 @@ body.viewer-open{overflow:hidden}
 </div>
 </article>
 
-<!-- THREE NEW PDF DOCUMENTS -->
-
+<!-- NEW DOCUMENT: BREN1 -->
 <article class="card" data-search="bren1 bren1.pdf">
 <div class="icon">PDF</div>
 <div class="info">
@@ -305,18 +304,7 @@ body.viewer-open{overflow:hidden}
 </div>
 </article>
 
-<article class="card" data-search="graduation list 2026 graduation-list-2026.pdf">
-<div class="icon">PDF</div>
-<div class="info">
-<h2>Graduation List 2026</h2>
-<p>graduation-list-2026.pdf</p>
-</div>
-<div class="actions">
-<button class="btn primary view-pdf" type="button" data-file="./graduation-list-2026.pdf">View PDF ↗</button>
-<button class="btn secondary protected-download" type="button" data-file="./graduation-list-2026.pdf">Download PDF ↓</button>
-</div>
-</article>
-
+<!-- NEW DOCUMENT: RENTLEST -->
 <article class="card" data-search="rentlest rentlest.pdf">
 <div class="icon">PDF</div>
 <div class="info">
@@ -326,6 +314,19 @@ body.viewer-open{overflow:hidden}
 <div class="actions">
 <button class="btn primary view-pdf" type="button" data-file="./rentlest.pdf">View PDF ↗</button>
 <button class="btn secondary protected-download" type="button" data-file="./rentlest.pdf">Download PDF ↓</button>
+</div>
+</article>
+
+<!-- NEW DOCUMENT: GRADUATION LIST 2026 -->
+<article class="card" data-search="graduation list 2026 graduation-list-2026.pdf">
+<div class="icon">PDF</div>
+<div class="info">
+<h2>Graduation List 2026</h2>
+<p>graduation-list-2026.pdf</p>
+</div>
+<div class="actions">
+<button class="btn primary view-pdf" type="button" data-file="./graduation-list-2026.pdf">View PDF ↗</button>
+<button class="btn secondary protected-download" type="button" data-file="./graduation-list-2026.pdf">Download PDF ↓</button>
 </div>
 </article>
 
@@ -346,7 +347,7 @@ body.viewer-open{overflow:hidden}
 </div>
 </div>
 <iframe class="viewer-frame" id="viewerFrame" title="PDF document preview" src="about:blank"></iframe>
-<p class="viewer-note">A password is required before each document action. Public PDF links may still be accessed directly.</p>
+<p class="viewer-note">A password is required before opening this PDF viewer. Password prompts in HTML are a basic deterrent only; public PDF links may still be opened directly.</p>
 </section>
 </div>
 
@@ -358,70 +359,43 @@ const cards=[...document.querySelectorAll('.card')];
 const empty=document.getElementById('empty');
 const count=document.getElementById('count');
 
-const DOWNLOAD_PASSWORD='GEOFRY@254';
-
-const backdrop=document.getElementById('viewerBackdrop');
-const viewerFrame=document.getElementById('viewerFrame');
-const viewerTitle=document.getElementById('viewerTitle');
-
-let activeFile='';
-
-/* PASSWORD CHECK FOR EVERY ACTION */
-function askForPassword(action){
-  const entered=window.prompt('Enter the password to '+action+':');
-
-  if(entered===null){
-    return false;
-  }
-
-  if(entered!==DOWNLOAD_PASSWORD){
-    window.alert(
-      'Incorrect password. '+
-      action.charAt(0).toUpperCase()+
-      action.slice(1)+
-      ' cancelled.'
-    );
-    return false;
-  }
-
-  return true;
-}
-
-/* SEARCH DOCUMENTS */
 function filterCards(){
   const q=search.value.trim().toLowerCase();
   let shown=0;
-
   for(const card of cards){
-    const match=card.dataset.search.toLowerCase().includes(q);
+    const match=card.dataset.search.includes(q);
     card.style.display=match?'grid':'none';
     if(match)shown++;
   }
-
   count.textContent=shown+' of '+cards.length+' documents';
   empty.style.display=shown?'none':'block';
 }
-
 search.addEventListener('input',filterCards);
 
-/* VIEW PDF - PASSWORD REQUIRED */
-function openViewer(file,title){
-  if(!askForPassword('view this document'))return;
+const DOWNLOAD_PASSWORD='GEOFRY@254';
+const backdrop=document.getElementById('viewerBackdrop');
+const viewerFrame=document.getElementById('viewerFrame');
+const viewerTitle=document.getElementById('viewerTitle');
+let activeFile='';
 
+function askForPassword(action){
+  const entered=window.prompt('Enter the password to '+action+':');
+  if(entered===null)return false;
+  if(entered!==DOWNLOAD_PASSWORD){
+    window.alert('Incorrect password. '+action.charAt(0).toUpperCase()+action.slice(1)+' cancelled.');
+    return false;
+  }
+  return true;
+}
+
+function openViewer(file,title){
   activeFile=file;
   viewerTitle.textContent=title||'PDF Preview';
-
-  const pdfURL=new URL(file,window.location.href).href;
-
-  viewerFrame.src=
-    'https://docs.google.com/gview?embedded=1&url='+
-    encodeURIComponent(pdfURL);
-
+  viewerFrame.src=file+'#toolbar=0&navpanes=0&scrollbar=0&view=FitH';
   backdrop.classList.add('open');
   document.body.classList.add('viewer-open');
 }
 
-/* CLOSE VIEWER */
 function closeViewer(){
   backdrop.classList.remove('open');
   document.body.classList.remove('viewer-open');
@@ -429,55 +403,10 @@ function closeViewer(){
   activeFile='';
 }
 
-/* DOWNLOAD PDF - PASSWORD REQUIRED */
-function downloadPDF(file){
-  if(!askForPassword('download this document'))return;
-
-  const a=document.createElement('a');
-  a.href=file;
-  a.download='';
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-}
-
-/* PRINT PDF - PASSWORD REQUIRED */
-function printPDF(){
-  if(!activeFile)return;
-
-  if(!askForPassword('print this document'))return;
-
-  const printTab=window.open(
-    activeFile+'#toolbar=1&navpanes=0',
-    '_blank'
-  );
-
-  if(!printTab){
-    window.alert(
-      'Your browser blocked the new tab. Allow pop-ups for this website and try again.'
-    );
-  }
-}
-
-/* SAVE / DOWNLOAD PDF - PASSWORD REQUIRED */
-function savePDF(){
-  if(!activeFile)return;
-
-  if(!askForPassword('save or download this document'))return;
-
-  const a=document.createElement('a');
-  a.href=activeFile;
-  a.download='';
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-}
-
-/* VIEW BUTTONS */
 document.querySelectorAll('.view-pdf').forEach(button=>{
   button.addEventListener('click',()=>{
+    if(!askForPassword('view this document'))return;
     const card=button.closest('.card');
-
     openViewer(
       button.dataset.file,
       card?card.querySelector('.info h2').textContent:'PDF Preview'
@@ -485,37 +414,51 @@ document.querySelectorAll('.view-pdf').forEach(button=>{
   });
 });
 
-/* DOWNLOAD BUTTONS */
 document.querySelectorAll('.protected-download').forEach(button=>{
   button.addEventListener('click',()=>{
-    downloadPDF(button.dataset.file);
+    const file=button.dataset.file;
+    if(!askForPassword('download this document'))return;
+    const a=document.createElement('a');
+    a.href=file;
+    a.download='';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
   });
 });
 
-/* PRINT BUTTON */
-document.getElementById('viewerPrint').addEventListener('click',printPDF);
+document.getElementById('viewerSave').addEventListener('click',()=>{
+  if(!activeFile||!askForPassword('save or download this document'))return;
+  const a=document.createElement('a');
+  a.href=activeFile;
+  a.download='';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+});
 
-/* SAVE BUTTON */
-document.getElementById('viewerSave').addEventListener('click',savePDF);
+document.getElementById('viewerPrint').addEventListener('click',()=>{
+  if(!activeFile||!askForPassword('print this document'))return;
+  const printTab=window.open(
+    activeFile+'#toolbar=1&navpanes=0',
+    '_blank'
+  );
+  if(!printTab){
+    window.alert('Your browser blocked the new tab. Allow pop-ups for this site, then click Print PDF again.');
+  }
+});
 
-/* CLOSE BUTTON */
 document.getElementById('viewerClose').addEventListener('click',closeViewer);
 
-/* CLICK OUTSIDE TO CLOSE */
 backdrop.addEventListener('click',event=>{
   if(event.target===backdrop)closeViewer();
 });
 
-/* ESCAPE TO CLOSE */
 document.addEventListener('keydown',event=>{
-  if(event.key==='Escape'&&backdrop.classList.contains('open')){
-    closeViewer();
-  }
+  if(event.key==='Escape'&&backdrop.classList.contains('open'))closeViewer();
 });
 
-/* FOOTER YEAR */
 document.getElementById('year').textContent=new Date().getFullYear();
-
 filterCards();
 </script>
 
